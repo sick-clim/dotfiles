@@ -21,6 +21,7 @@ set wrapscan
 set hlsearch
 
 set wildmenu
+set laststatus=2
 
 let mapleader = "\<Space>"
 
@@ -29,10 +30,15 @@ nnoremap <Leader>f :Files<CR>
 "nnoremap <Leader>f :GFiles<CR>
 
 call plug#begin('~/.vim/plugged')
+Plug 'joshdick/onedark.vim'
 Plug 'fatih/vim-go'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'vim-airline/vim-airline'
 call plug#end()
 
-
+syntax on
+let g:airline_powerline_fonts = 1
+colorscheme onedark
+let g:airline_theme='onedark'
