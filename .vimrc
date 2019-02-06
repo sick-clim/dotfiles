@@ -23,6 +23,7 @@ set autowrite
 
 set wildmenu
 set laststatus=2
+set spelllang=en,cjk
 
 " Move between open buffers.
 nmap <C-n> :bnext<CR>
@@ -46,6 +47,8 @@ nnoremap <Leader>f :Files<CR>
 "nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>d :Gdiff<CR>
 nnoremap <Leader>s :Gstatus<CR>
+
+nnoremap x "_x
 
 call plug#begin('~/.vim/plugged')
 Plug 'joshdick/onedark.vim'
