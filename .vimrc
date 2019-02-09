@@ -4,6 +4,7 @@
 set encoding=utf-8
 
 set number
+set title
 set noswapfile
 set hidden
 
@@ -24,6 +25,15 @@ set autowrite
 set wildmenu
 set laststatus=2
 set spelllang=en,cjk
+
+" ESCx2 でハイライトの切替
+nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
+
+set clipboard=unnamed,autoselect
+
+" 不可視文字を表示：タブ>- 半角スペース.で表示
+set list
+set listchars=tab:»\ ,trail:-,extends:»,precedes:«,nbsp:% "space 対応"
 
 " Move between open buffers.
 nmap <C-n> :bnext<CR>
@@ -60,6 +70,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
+Plug 'Yggdroot/indentLine'
 Plug 'cohama/lexima.vim'
 Plug 'w0rp/ale'
 call plug#end()
