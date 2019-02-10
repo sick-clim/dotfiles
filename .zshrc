@@ -57,6 +57,6 @@ bindkey '^H' ssh_fzf
 function ghq_fzf() {
     local selected_dir=$(ghq list | fzf)
     if [[ $selected_dir == "" ]]; then
-         return 1   
-    }
+         return 1
+    fi
 }
