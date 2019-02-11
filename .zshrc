@@ -41,7 +41,9 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 [[ -z $TMUX && ! -z $PS1 ]] && exec tmux
 
 # setopt noflowcontrol
-
+setopt auto_cd
+setopt auto_pushd
+setopt correct
 
 function ssh_fzf() {
     local ssh_login_host
@@ -60,3 +62,6 @@ function ghq_fzf() {
          return 1
     fi
 }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
