@@ -59,6 +59,7 @@ nnoremap <Leader>d :Gdiff<CR>
 nnoremap <Leader>s :Gstatus<CR>
 
 nnoremap x "_x
+inoremap ;; <Esc>
 
 call plug#begin('~/.vim/plugged')
 Plug 'joshdick/onedark.vim'
