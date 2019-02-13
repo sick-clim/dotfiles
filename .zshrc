@@ -41,6 +41,8 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 [[ -z $TMUX && ! -z $PS1 ]] && exec tmux
 
 # setopt noflowcontrol
+stty stop undef
+
 setopt auto_cd
 setopt auto_pushd
 setopt correct
@@ -62,6 +64,19 @@ function ghq_fzf() {
          return 1
     fi
 }
+zle -N ghq_fzf
+bindkey '^G^L' ghq_fzf
+
+function git_status() {
+    if [[ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" == "true" ]]; then
+        echo git status -sb
+        git status -sb
+    fi
+    #zle reset-prompt
+}
+zle -N git_status
+bindkey '^Gs' git_status
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
