@@ -47,36 +47,48 @@ setopt auto_cd
 setopt auto_pushd
 setopt correct
 
-function ssh_fzf() {
-    local ssh_login_host
-    ssh_login_host=$(cat ~/.ssh/config | grep -i ^host | awk '{print $2}' | fzf)
-    if [[ ${ssh_login_host} == "" ]]; then
-        return 1
+function ssh-fzf() {
+    local selected_host
+    selected_host=$(cat ~/.ssh/config | grep -i ^host | awk '{print $2}' | fzf-tmux -d --reverse --prompt='ssh > ')
+    if [[ -n ${selected_host} ]]; then
+        BUFFER="ssh ${selected_host}"
+        zle accept-line
     fi
-    ssh ${ssh_login_host}
+    zle clear-screen
 }
-zle -N ssh_fzf
-bindkey '^H' ssh_fzf
+zle -N ssh-fzf
+bindkey '^H' ssh-fzf
 
-function ghq_fzf() {
-    local selected_dir=$(ghq list | fzf)
-    if [[ $selected_dir == "" ]]; then
-         return 1
+function ghq-fzf() {
+    local selected_dir=$(ghq list | fzf-tmux -d --reverse --prompt='repo > ')
+    if [[ -n $selected_dir ]]; then
+        BUFFER="ghq look $selected_dir"
+        zle accept-line
     fi
 }
-zle -N ghq_fzf
-bindkey '^G^L' ghq_fzf
+zle -N ghq-fzf
+bindkey '^G^L' ghq-fzf
 
-function git_status() {
+function git-status() {
     if [[ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" == "true" ]]; then
         echo git status -sb
-        git status -sb
+        BUFFER="git status -sb"
+        zle accept-line
     fi
     #zle reset-prompt
 }
-zle -N git_status
-bindkey '^Gs' git_status
+zle -N git-status
+bindkey '^Gs' git-status
 
+function git-checkout-fzf() {
+    local selected_branch=$(git branch --all | fzf-tmux -d --reverse --prompt='git branch > ')
+    if [[ -n $selected_branch ]]; then
+        BUFFER="git checkout $selected_branch"
+        zle accept-line
+    fi
+}
+zle -N git-checkout-fzf
+bindkey '^O' git-checkout-fzf
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
