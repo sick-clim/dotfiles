@@ -51,7 +51,7 @@ setopt correct
 alias ll='ls -al'
 alias gl='git log'
 alias glo='git log --oneline -n 7'
-aliad gd='git diff'
+alias gd='git diff'
 alias gs='git status -sb'
 alias gb='git branch'
 alias gbr='git branch -r'
