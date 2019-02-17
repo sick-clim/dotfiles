@@ -47,6 +47,18 @@ setopt auto_cd
 setopt auto_pushd
 setopt correct
 
+# aliases
+alias ll='ls -al'
+alias gl='git log'
+alias glo='git log --oneline -n 7'
+aliad gd='git diff'
+alias gs='git status -sb'
+alias gb='git branch'
+alias gbr='git branch -r'
+alias gco='git chckout'
+alias gcm='git commit -m'
+alias gf='git fetch'
+
 function ssh-fzf() {
     local selected_host
     selected_host=$(cat ~/.ssh/config | grep -i ^host | awk '{print $2}' | fzf-tmux -d --reverse --prompt='ssh > ')
