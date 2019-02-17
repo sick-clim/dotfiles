@@ -1,8 +1,34 @@
 # Set up the prompt
 
-autoload -Uz promptinit
-promptinit
-prompt adam1
+#autoload -Uz promptinit
+autoload -Uz vcs_info
+autoload -Uz colors
+colors
+setopt prompt_subst
+
+zstyle ':vcs_info:git:*' check-for-changes true #formats 設定項目で %c,%u が使用可
+zstyle ':vcs_info:git:*' stagedstr "%F{green}!" #commit されていないファイルがある
+zstyle ':vcs_info:git:*' unstagedstr "%F{magenta}+" #add されていないファイルがある
+zstyle ':vcs_info:*' formats "%F{cyan}%c%u(%b)%f" #通常
+zstyle ':vcs_info:*' actionformats '[%b|%a]' #rebase 途中,merge コンフリクト等 formats 外の表示
+
+# %b ブランチ情報
+# %a アクション名(mergeなど)
+# %c changes
+# %u uncommit
+
+# プロンプト表示直前に vcs_info 呼び出し
+precmd () { vcs_info  }
+
+# プロンプト（左）
+PROMPT='${vcs_info_msg_0_} %{${fg[green]}%}%}'
+PROMPT=$PROMPT'%{${fg[red]}%}[%~]%{${reset_color}%}
+❯❯%{${reset_color}%} '
+
+# プロンプト（右）
+
+#promptinit
+#prompt adam1
 
 setopt histignorealldups sharehistory
 
@@ -10,8 +36,8 @@ setopt histignorealldups sharehistory
 bindkey -e
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=100000
+SAVEHIST=100000
 HISTFILE=~/.zsh_history
 
 # Use modern completion system
