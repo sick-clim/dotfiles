@@ -1,3 +1,5 @@
+LANG=en_US.UTF-8
+
 # Set up the prompt
 
 #autoload -Uz promptinit
@@ -119,7 +121,7 @@ zle -N git-status
 bindkey '^Gs' git-status
 
 function git-checkout-fzf() {
-    local selected_branch=$(git branch --all | fzf-tmux -d --reverse --prompt='git branch > ')
+    local selected_branch=$(git branch --all | fzf-tmux -d --reverse --prompt='git branch > ' | sed -e "s|remotes/origin/||g")
     if [[ -n $selected_branch ]]; then
         BUFFER="git checkout $selected_branch"
         zle accept-line
