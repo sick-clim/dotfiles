@@ -6,7 +6,12 @@ set encoding=utf-8
 set number
 set title
 set noswapfile
+" if hidden is not set, TextEdit might fail.
 set hidden
+" always show signcolumns
+set signcolumn=yes
+" Better display for messages
+set cmdheight=2
 
 set expandtab
 set tabstop=4
@@ -72,8 +77,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/indentLine'
-Plug 'cohama/lexima.vim'
+"Plug 'cohama/lexima.vim'
 Plug 'w0rp/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
@@ -90,10 +96,29 @@ endfunction
 autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
 "autocmd FileType go nmap <Leader>i <Plug>(go-info)
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 let g:go_auto_type_info = 1
 let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
 let g:go_auto_sameids = 1
+
+" -------------------------------------------------------------------------------------------------
+" coc.nvim default settings
+" -------------------------------------------------------------------------------------------------
+
+" use <tab> for trigger completion and navigate to next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+" use <c-space>for trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
 
 syntax on
 let g:airline_powerline_fonts = 1
