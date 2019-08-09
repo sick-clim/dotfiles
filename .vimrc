@@ -54,6 +54,14 @@ nmap <C-k> <C-W>k
 nmap <C-h> <C-W>h
 nmap <C-l> <C-W>l
 
+" ALE
+nmap ]a :ALENextWrap<CR>
+nmap [a :ALEPreviousWrap<CR>
+
+" quickfix
+nnoremap [q :cprevious<CR>
+nnoremap ]q :cnext<CR> 
+
 let mapleader = "\<Space>"
 
 nnoremap <leader>a :cclose<CR>
