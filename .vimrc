@@ -57,37 +57,57 @@ nmap <C-l> <C-W>l
 " ALE
 nmap ]a :ALENextWrap<CR>
 nmap [a :ALEPreviousWrap<CR>
+let g:ale_linters = {
+    \ 'sh': ['bash-language_server','shellcheck'],
+    \ }
+let g:ale_fixers = {
+    \ '*': ['trim_whitespace'],
+    \ 'python': ['black'],
+    \ 'sh': ['shfmt'],
+    \ }
+let g:ale_fix_on_save = 1
 
 " quickfix
 nnoremap [q :cprevious<CR>
-nnoremap ]q :cnext<CR> 
+nnoremap ]q :cnext<CR>
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 let mapleader = "\<Space>"
 
 nnoremap <leader>a :cclose<CR>
-nnoremap <Leader>l :Buffers<CR>
+nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>f :Files<CR>
+nnoremap <Leader>h :History<CR>
+nnoremap <Leader>r :Rg<CR>
 "nnoremap <Leader>f :GFiles<CR>
-nnoremap <Leader>d :Gdiff<CR>
-nnoremap <Leader>s :Gstatus<CR>
+nnoremap <Leader>d :Gdiffsplit<CR>
+nnoremap <Leader>s :G<CR>
+nnoremap <Leader>p :<C-u>CocList files<CR>
 
 nnoremap x "_x
 inoremap ;; <Esc>
 
 call plug#begin('~/.vim/plugged')
+Plug 'sheerun/vim-polyglot'
 Plug 'joshdick/onedark.vim'
 Plug 'fatih/vim-go', { 'do': 'GoUpdateBinaries' }
 "Plug 'AndrewRadev/splitjoin.vim'
-"Plug 'SirVer/ultisnips'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/indentLine'
-"Plug 'cohama/lexima.vim'
-Plug 'w0rp/ale'
+Plug 'cohama/lexima.vim'
+"Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 call plug#end()
 
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
@@ -110,25 +130,10 @@ let g:go_auto_type_info = 1
 let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
 let g:go_auto_sameids = 1
-
-" -------------------------------------------------------------------------------------------------
-" coc.nvim default settings
-" -------------------------------------------------------------------------------------------------
-
-" use <tab> for trigger completion and navigate to next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-" use <c-space>for trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
+let g:go_term_mode = 'split'
 
 syntax on
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#ale#enabled = 1
 colorscheme onedark
 let g:airline_theme='onedark'

@@ -76,7 +76,8 @@ setopt auto_pushd
 setopt correct
 
 # aliases
-alias ll='ls -al'
+alias ls='exa'
+alias ll='exa -ahl --git'
 alias gl='git log'
 alias glo='git log --oneline -n 7'
 alias gd='git diff'
@@ -86,6 +87,8 @@ alias gbr='git branch -r'
 alias gco='git chckout'
 alias gcm='git commit -m'
 alias gf='git fetch'
+alias lg='lazygit'
+alias lad='lazydocker'
 
 function ssh-fzf() {
     local selected_host
