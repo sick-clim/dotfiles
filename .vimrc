@@ -65,12 +65,13 @@ let g:ale_fixers = {
     \ 'python': ['black'],
     \ 'sh': ['shfmt'],
     \ }
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 
 " quickfix
 nnoremap [q :cprevious<CR>
 nnoremap ]q :cnext<CR>
 
+" GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -88,11 +89,19 @@ nnoremap <Leader>d :Gdiffsplit<CR>
 nnoremap <Leader>s :G<CR>
 nnoremap <Leader>p :<C-u>CocList files<CR>
 
+"fzf
+"let g:fzf_preview_window = []
+
+"open browser
+let g:netrw_nogx = 1 "disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+nnoremap <Leader>o:<C-u>execute "OpenBrowser" "file:///".expand('%:p:gs?\\?/?')<CR>
+
 nnoremap x "_x
 inoremap ;; <Esc>
 
 call plug#begin('~/.vim/plugged')
-Plug 'sheerun/vim-polyglot'
+"Plug 'sheerun/vim-polyglot'
 Plug 'joshdick/onedark.vim'
 Plug 'fatih/vim-go', { 'do': 'GoUpdateBinaries' }
 "Plug 'AndrewRadev/splitjoin.vim'
@@ -108,6 +117,7 @@ Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'tyru/open-browser.vim'
 call plug#end()
 
 autocmd FileType go nmap <leader>r  <Plug>(go-run)

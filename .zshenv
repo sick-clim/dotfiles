@@ -6,7 +6,7 @@ path=(
   $HOME/bin(N-/)
   $GOPATH/bin(N-/)
   $PYENV_ROOT/bin(N-/)
-  /usr/local/opt/coreutils/libexec/gnubin(N-/)
+  $(brew --prefix coreutils)/libexec/gnubin(N-/)
   $path
 )
 
@@ -14,7 +14,9 @@ if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
 fi
 
-export GOPATH=$HOME
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
 export PYENV_ROOT="$HOME/.pyenv"
-export AWS_DEFAULT_PROFILE=localstack
+#export AWS_DEFAULT_PROFILE=localstack
+#export AWS_DEFAULT_PROFILE=
 

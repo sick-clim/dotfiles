@@ -105,7 +105,7 @@ bindkey '^H' ssh-fzf
 function ghq-fzf() {
     local selected_dir=$(ghq list | fzf-tmux -d --reverse --prompt='repo > ')
     if [[ -n $selected_dir ]]; then
-        BUFFER="ghq look $selected_dir"
+        BUFFER="ghq get --look $selected_dir"
         zle accept-line
     fi
 }
@@ -131,7 +131,14 @@ function git-checkout-fzf() {
     fi
 }
 zle -N git-checkout-fzf
-bindkey '^O' git-checkout-fzf
+bindkey '^G^O' git-checkout-fzf
+
+function open-vscode() {
+    code .
+    zle accept-line
+}
+zle -N open-vscode
+bindkey '^O^V' open-vscode
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
