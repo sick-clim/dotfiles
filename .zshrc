@@ -142,3 +142,8 @@ bindkey '^O^V' open-vscode
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+function gi() { curl -sLw n https://www.toptal.com/developers/gitignore/api/$@ ;}
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+source /Users/yoshioka/.config/broot/launcher/bash/br

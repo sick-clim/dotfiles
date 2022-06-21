@@ -62,7 +62,7 @@ let g:ale_linters = {
     \ }
 let g:ale_fixers = {
     \ '*': ['trim_whitespace'],
-    \ 'python': ['black'],
+    \ 'python': ['black','autoimport'],
     \ 'sh': ['shfmt'],
     \ }
 let g:ale_fix_on_save = 0
