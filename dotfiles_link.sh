@@ -1,7 +1,7 @@
 #!/bin/bash -eu
 set -e
 
-readonly DOTFILES=(.vimrc .tmux.conf .zshrc .zshenv)
+readonly DOTFILES=(.vimrc .tmux.conf .zshrc .zshenv .tool-versions)
 
 which ghq
 
