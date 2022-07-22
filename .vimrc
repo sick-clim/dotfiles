@@ -12,6 +12,8 @@ set hidden
 set signcolumn=yes
 " Better display for messages
 set cmdheight=2
+" more powerful backspacing
+set backspace=indent,eol,start
 
 set expandtab
 set tabstop=4
@@ -147,3 +149,10 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
 colorscheme onedark
 let g:airline_theme='onedark'
+
+
+" Coc Extensions
+let g:coc_global_extensions = [
+            \'coc-sh',
+            \'coc-pyright'
+            \]
