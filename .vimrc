@@ -32,6 +32,7 @@ set autowrite
 set wildmenu
 set laststatus=2
 set spelllang=en,cjk
+set history=1000
 
 " ESCx2 でハイライトの切替
 nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
@@ -85,14 +86,12 @@ nnoremap <leader>a :cclose<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>f :Files<CR>
 nnoremap <Leader>h :History<CR>
+nnoremap <Leader>c :History:<CR>
 nnoremap <Leader>r :Rg<CR>
 "nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>d :Gdiffsplit<CR>
 nnoremap <Leader>s :G<CR>
 nnoremap <Leader>p :<C-u>CocList files<CR>
-
-"fzf
-"let g:fzf_preview_window = []
 
 "open browser
 let g:netrw_nogx = 1 "disable netrw's gx mapping.
@@ -150,6 +149,9 @@ let g:airline#extensions#ale#enabled = 1
 colorscheme onedark
 let g:airline_theme='onedark'
 
+"fzf
+"let g:fzf_preview_window = []
+let g:fzf_layout = { 'window': { 'width': 1, 'height': 1  }  }
 
 " Coc Extensions
 let g:coc_global_extensions = [
