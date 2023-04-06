@@ -80,6 +80,7 @@ alias ls='exa'
 alias ll='exa -ahl --git'
 alias gl='git log'
 alias glo='git log --oneline -n 7'
+alias gg='git log --all --pretty=full --graph'
 alias gd='git diff'
 alias gs='git status -sb'
 alias gb='git branch'
@@ -89,6 +90,7 @@ alias gcm='git commit -m'
 alias gf='git fetch'
 alias lg='lazygit'
 alias lad='lazydocker'
+alias gui='gitui'
 
 function ssh-fzf() {
     local selected_host
@@ -140,6 +142,16 @@ function open-vscode() {
 zle -N open-vscode
 bindkey '^O^V' open-vscode
 
+# Modified version where you can press
+#   - CTRL-O to open with `open` command,
+#   - CTRL-E or Enter key to open with the $EDITOR
+function open-file() {
+    local files
+    find . -type f | fzf
+}
+zle -N open-file
+bindkey '^N' open-file
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 function gi() { curl -sLw n https://www.toptal.com/developers/gitignore/api/$@ ;}
@@ -147,4 +159,3 @@ function gi() { curl -sLw n https://www.toptal.com/developers/gitignore/api/$@ ;
 eval "$(/opt/homebrew/bin/brew shellenv)"
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
-source /Users/yoshioka/.config/broot/launcher/bash/br

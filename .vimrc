@@ -12,6 +12,8 @@ set hidden
 set signcolumn=yes
 " Better display for messages
 set cmdheight=2
+" more powerful backspacing
+set backspace=indent,eol,start
 
 set expandtab
 set tabstop=4
@@ -30,6 +32,7 @@ set autowrite
 set wildmenu
 set laststatus=2
 set spelllang=en,cjk
+set history=1000
 
 " ESCx2 でハイライトの切替
 nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
@@ -83,14 +86,12 @@ nnoremap <leader>a :cclose<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>f :Files<CR>
 nnoremap <Leader>h :History<CR>
+nnoremap <Leader>c :History:<CR>
 nnoremap <Leader>r :Rg<CR>
 "nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>d :Gdiffsplit<CR>
 nnoremap <Leader>s :G<CR>
 nnoremap <Leader>p :<C-u>CocList files<CR>
-
-"fzf
-"let g:fzf_preview_window = []
 
 "open browser
 let g:netrw_nogx = 1 "disable netrw's gx mapping.
@@ -103,7 +104,7 @@ inoremap ;; <Esc>
 call plug#begin('~/.vim/plugged')
 "Plug 'sheerun/vim-polyglot'
 Plug 'joshdick/onedark.vim'
-Plug 'fatih/vim-go', { 'do': 'GoUpdateBinaries' }
+"Plug 'fatih/vim-go', { 'do': 'GoUpdateBinaries' }
 "Plug 'AndrewRadev/splitjoin.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -147,3 +148,13 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
 colorscheme onedark
 let g:airline_theme='onedark'
+
+"fzf
+"let g:fzf_preview_window = []
+let g:fzf_layout = { 'window': { 'width': 1, 'height': 1  }  }
+
+" Coc Extensions
+let g:coc_global_extensions = [
+            \'coc-sh',
+            \'coc-pyright'
+            \]

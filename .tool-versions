@@ -1,3 +1,4 @@
-helm 3.7.0
+helm 3.8.0
 kustomize 4.2.0
 python 3.8.13
+nodejs 18.4.0
