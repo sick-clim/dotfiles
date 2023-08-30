@@ -81,16 +81,22 @@ alias ll='exa -ahl --git'
 alias gl='git log'
 alias glo='git log --oneline -n 7'
 alias gg='git log --all --pretty=full --graph'
+alias gh="git log --graph --oneline --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)%ad%C(reset) %s%C(bold yellow)%d%C(reset) [%an]' --date=short"
 alias gd='git diff'
 alias gs='git status -sb'
 alias gb='git branch'
 alias gbr='git branch -r'
+alias gbc='git rev-parse --abbrev-ref HEAD | pbcopy'
 alias gco='git chckout'
+alias gpp='git pull --prune'
+alias gpr='git pull --rebase'
+alias gpo='git push origin HEAD'
 alias gcm='git commit -m'
 alias gf='git fetch'
 alias lg='lazygit'
 alias lad='lazydocker'
 alias gui='gitui'
+alias vi='nvim'
 
 function ssh-fzf() {
     local selected_host
@@ -145,12 +151,17 @@ bindkey '^O^V' open-vscode
 # Modified version where you can press
 #   - CTRL-O to open with `open` command,
 #   - CTRL-E or Enter key to open with the $EDITOR
-function open-file() {
-    local files
-    find . -type f | fzf
+
+function vf() {
+    local file
+    file=$(fzf-tmux --preview)
+    if [[ -n "$file" ]]; then
+        BUFFER="vim $file"
+        zle accept-line
+    fi
 }
-zle -N open-file
-bindkey '^N' open-file
+zle -N vf
+bindkey '^N' vf
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -159,3 +170,11 @@ function gi() { curl -sLw n https://www.toptal.com/developers/gitignore/api/$@ ;
 eval "$(/opt/homebrew/bin/brew shellenv)"
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/yoshioka/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

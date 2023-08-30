@@ -9,7 +9,8 @@ set expandtab
 set textwidth=0
 set autoindent
 set hlsearch
-set clipboard=unnamed
+" set clipboard=unnamed
+set clipboard+=unnamedplus
 
 syntax off
 
@@ -33,6 +34,9 @@ nmap <C-j> <C-W>j
 nmap <C-k> <C-W>k
 nmap <C-h> <C-W>h
 nmap <C-l> <C-W>l
+
+" x は yank しない
+nnoremap x "_x
 
 " vim-plug
 call plug#begin()
@@ -72,6 +76,9 @@ let g:airline_theme='deus'
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" coc-explorer
+nmap <space>e <Cmd>CocCommand explorer<CR>
 
 " Use `[h` and `]h` to navigate hunk
 nmap ]h <Plug>(GitGutterNextHunk)
