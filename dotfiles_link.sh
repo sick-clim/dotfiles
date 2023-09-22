@@ -3,11 +3,13 @@ set -e
 
 readonly DOTFILES=(
   .vimrc
-  .tmux.conf
   .zshrc
   .zshenv
   .tool-versions
   .config/nvim/init.vim
+  .config/tmux/statusline.conf
+  .config/tmux/tmux.conf
+  .config/lvim/config.lua
 )
 
 which ghq
