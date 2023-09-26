@@ -76,8 +76,8 @@ setopt auto_pushd
 setopt correct
 
 # aliases
-alias ls='exa'
-alias ll='exa -ahl --git'
+alias ls='eza'
+alias ll='eza -ahl --git'
 alias gl='git log'
 alias glo='git log --oneline -n 7'
 alias gg='git log --all --pretty=full --graph'
