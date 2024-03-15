@@ -6,9 +6,11 @@ readonly DOTFILES=(
   .zshrc
   .zshenv
 #  .tool-versions
-  .config/nvim/init.vim
+#  TODO: artro へ移行
+#  .config/nvim/init.vim
   .config/tmux/statusline.conf
   .config/tmux/tmux.conf
+  .config/karabiner/karabiner.json
 #  .config/lvim/config.lua
 )
 
@@ -30,8 +32,9 @@ repo_path=$(ghq list dotfiles)
 ghq_root=$(ghq root)
 cd $ghq_root/$repo_path
 
+# Memo: .config 配下をディレクトリ別にシンボリックリンクでも良いかも？
 mkdir -p ~/.config
-for d in nvim tmux; do
+for d in nvim tmux karabiner; do
     mkdir -p ~/.config/${d}
 done
 
