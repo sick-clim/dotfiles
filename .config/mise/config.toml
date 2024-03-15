@@ -1,0 +1,6 @@
+[tools]
+kustomize = "4.2.0"
+helm = "3.13.3"
+kind = "0.20.0"
+node = "21.5"
+
