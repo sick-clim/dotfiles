@@ -1,0 +1,42 @@
+# Use custom format
+format = '''
+[┌───────────────────>](bold green)
+[│](bold green)$directory$git_branch$git_status
+[└─>](bold green) '''
+
+# Wait 10 milliseconds for starship to check files under the current directory.
+scan_timeout = 10
+
+# Disable the blank line at the start of the prompt
+add_newline = false
+
+# Set 'foo' as custom color palette
+palette = 'foo'
+
+# Define custom colors
+[palettes.foo]
+# Overwrite existing color
+blue = '21'
+# Define new color
+mustard = '#af8700'
+
+[git_branch]
+symbol = '  ' # nf-fa-github_alt, nf-fa-code_fork
+truncation_length = 4
+truncation_symbol = ''
+style = 'fg:#7aa2f7 bg:#1a1b26'
+format = '[  $symbol$branch(:$remote_branch)]($style)' # nf-pl-left_soft_divider
+
+[git_status]
+style = 'fg:#e0af68 bg:#1a1b26'
+conflicted = '='
+ahead = '⇡${count}'
+behind = '⇣${count}'
+diverged = '⇕'
+up_to_date = '✓'
+untracked = '?'
+stashed = '$'
+modified = '!${count}'
+renamed = '»'
+deleted = '✘'
+format = '([\[$all_status$ahead_behind\]]($style))'

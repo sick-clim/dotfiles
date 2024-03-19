@@ -1,20 +1,34 @@
-# Created by Zap installer
-[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
-plug "zsh-users/zsh-autosuggestions"
-plug "zap-zsh/supercharge"
-plug "zap-zsh/zap-prompt"
-plug "zsh-users/zsh-syntax-highlighting"
+#bindkey -v
 
-# Load and initialise completion system
-autoload -Uz compinit
-compinit
-
-# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=10000
-SAVEHIST=100000
 HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=100000
+setopt hist_ignore_all_dups
+setopt hist_no_store
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt inc_append_history
+setopt share_history
 
-eval "$(jump shell --bind=z)"
+eval "$(starship init zsh)"
+
+[[ -r ~/.znap/zsh-snap/znap.zsh ]] ||
+    git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git ~/.znap/zsh-snap
+
+source ~/.znap/zsh-snap/znap.zsh
+
+# zsh plugins
+znap source marlonrichert/zsh-autocomplete
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-syntax-highlighting
+znap source ptavares/zsh-direnv
+
+# `znap install` adds new commands and completions.
+znap install zsh-users/zsh-completions
+
+alias k=kubectl
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
 
 # zsh起動時にtmux 起動
 ### [[ -z $TMUX && ! -z $PS1 ]] && exec tmux
@@ -44,6 +58,7 @@ alias lg='lazygit'
 alias gui='gitui'
 alias lad='lazydocker'
 alias vi='nvim'
+alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 
 function gopen() {
     url=$(git config remote.origin.url)
@@ -105,21 +120,3 @@ bindkey '^G^O' git-switch-fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 function gi() { curl -sLw n https://www.toptal.com/developers/gitignore/api/$@ ;}
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="$HOME/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-
-### . /opt/homebrew/opt/asdf/libexec/asdf.sh
-
-alias k=kubectl
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-
-eval "$(/opt/homebrew/bin/mise activate zsh)"
-
-alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'

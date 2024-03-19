@@ -14,5 +14,5 @@ git config --global user.email <e-mail>
 
 git clone --bare https://github.com/sick-clim/dotfiles ~/dotfiles
 cd
-git --git-dir=$HOME/dotfiles/ --work-tree=$HOME
+git --git-dir=$HOME/dotfiles/ --work-tree=$HOME checkout
 ```
