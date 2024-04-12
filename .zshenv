@@ -16,6 +16,8 @@ if command -v pyenv 1>/dev/null 2>&1; then
     eval "$(pyenv init -)"
 fi
 
+export LANG=ja_JP.UTF-8
+
 # Go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
