@@ -17,6 +17,7 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 export LANG=ja_JP.UTF-8
+export LC_CTYPE=ja_JP.UTF-8
 
 # Go
 export GOPATH=$HOME/go
