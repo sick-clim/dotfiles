@@ -1,0 +1,72 @@
+[
+  {
+    "context": "vim_mode == normal",
+    "bindings": {
+      "space q": "workspace::CloseWindow"
+    }
+  },
+  {
+    "context": "vim_mode != insert",
+    "bindings": {
+      "space space": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Editor && VimControl && !VimWaiting && !menu",
+    "bindings": {
+      "space e": "project_panel::ToggleFocus",
+      "space w": "workspace::Save",
+      // "ctrl-n": "tab_switcher::Toggle",
+      // "ctrl-p": ["tab_switcher::Toggle", { "select_last": true }],
+      "ctrl-p": "pane::ActivatePrevItem",
+      "ctrl-n": "pane::ActivateNextItem",
+      "\\": "pane::SplitDown",
+      "|": "pane::SplitRight",
+      // Move pannel
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+      "shift-k": "editor::Hover"
+      // "d ]": "editor::GoToHunk",
+      // "d [": "editor::GoToPrevHunk"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-\\": "terminal_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "Workspace && not_editing",
+    "bindings": {
+      "space c": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "space e": "project_panel::ToggleFocus",
+      "escape": "project_panel::ToggleFocus",
+      "a": "project_panel::NewFile",
+      "shift-a": "project_panel::NewDirectory",
+      "c": "project_panel::Copy",
+      "d": "project_panel::Delete",
+      "/": "project_panel::NewSearchInDirectory",
+      "enter": "project_panel::OpenPermanent",
+      "h": "project_panel::CollapseSelectedEntry",
+      "j": "menu::SelectNext",
+      "k": "menu::SelectPrev",
+      "l": "project_panel::ExpandSelectedEntry",
+      "o": "project_panel::OpenPermanent",
+      "t": "project_panel::OpenPermanent",
+      "v": "project_panel::OpenPermanent",
+      // "p": "project_panel::Open",
+      "p": "project_panel::Paste",
+      "r": "project_panel::Rename",
+      "x": "project_panel::RevealInFinder",
+      ":": "command_palette::Toggle"
+    }
+  }
+]
