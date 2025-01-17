@@ -13,6 +13,8 @@ compinit
 HISTSIZE=10000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
+# 他のターミナルとヒストリーを共有
+setopt share_history
 
 eval "$(jump shell --bind=z)"
 

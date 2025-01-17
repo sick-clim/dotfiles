@@ -35,7 +35,8 @@
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-\\": "terminal_panel::ToggleFocus"
+      "ctrl-\\": "terminal_panel::ToggleFocus",
+      "space c": "pane::CloseActiveItem"
     }
   },
   {
@@ -45,9 +46,15 @@
     }
   },
   {
+    "context": "ProjectSearch",
+    "bindings": {}
+  },
+  {
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      "space e": "project_panel::ToggleFocus",
+      // "space e": "project_panel::ToggleFocus",
+      "space e": "workspace::ToggleLeftDock",
+      "ctrl-l": "workspace::ToggleLeftDock",
       "escape": "project_panel::ToggleFocus",
       "a": "project_panel::NewFile",
       "shift-a": "project_panel::NewDirectory",
@@ -66,7 +73,9 @@
       "p": "project_panel::Paste",
       "r": "project_panel::Rename",
       "x": "project_panel::RevealInFinder",
-      ":": "command_palette::Toggle"
+      ":": "command_palette::Toggle",
+      "g d": "editor::GoToDefinition",
+      "g r": "editor::FindAllReferences"
     }
   }
 ]
