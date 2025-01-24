@@ -1,11 +1,16 @@
 [tools]
-kustomize = "4.2.0"
+kustomize = "5.3.0"
 helm = "3.13.3"
 kind = "0.20.0"
-node = "21.5"
+node = "22.13.0"
 eza = "0.18.7"
 ghq = "1.5.0"
-go = "1.22.1"
+go = "1.23.3"
 fzf = "0.48.0"
+bun = "1.1.17"
+kubectl = "1.30.2"
+task = "3.40.0"
+zoxide = "0.9.6"
+yazi = "0.4.2"
 
 

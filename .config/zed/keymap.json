@@ -6,7 +6,7 @@
     }
   },
   {
-    "context": "vim_mode != insert",
+    "context": "VimControl && !VimWaiting && vim_mode != insert",
     "bindings": {
       "space space": "file_finder::Toggle"
     }
@@ -16,6 +16,7 @@
     "bindings": {
       "space e": "project_panel::ToggleFocus",
       "space w": "workspace::Save",
+      "space c": "pane::CloseActiveItem",
       // "ctrl-n": "tab_switcher::Toggle",
       // "ctrl-p": ["tab_switcher::Toggle", { "select_last": true }],
       "ctrl-p": "pane::ActivatePrevItem",
@@ -33,7 +34,7 @@
     }
   },
   {
-    "context": "Workspace",
+    "context": "Workspace && VimControl",
     "bindings": {
       "ctrl-\\": "terminal_panel::ToggleFocus",
       "space c": "pane::CloseActiveItem"
