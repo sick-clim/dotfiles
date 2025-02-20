@@ -8,7 +8,10 @@
   {
     "context": "VimControl && !VimWaiting && vim_mode != insert",
     "bindings": {
-      "space space": "file_finder::Toggle"
+      "space space": "file_finder::Toggle",
+      "space \/": "pane::DeploySearch",
+      "g h": "vim::StartOfLine",
+      "g l": "vim::EndOfLine"
     }
   },
   {
@@ -24,10 +27,10 @@
       "\\": "pane::SplitDown",
       "|": "pane::SplitRight",
       // Move pannel
-      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown",
       "shift-k": "editor::Hover"
       // "d ]": "editor::GoToHunk",
       // "d [": "editor::GoToPrevHunk"
@@ -73,7 +76,6 @@
       // "p": "project_panel::Open",
       "p": "project_panel::Paste",
       "r": "project_panel::Rename",
-      "x": "project_panel::RevealInFinder",
       ":": "command_palette::Toggle",
       "g d": "editor::GoToDefinition",
       "g r": "editor::FindAllReferences"
