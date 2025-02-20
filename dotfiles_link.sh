@@ -12,6 +12,8 @@ readonly DOTFILES=(
   .config/tmux/tmux.conf
   .config/karabiner/karabiner.json
   #  .config/lvim/config.lua
+  .config/helix/config.toml
+  .config/alacritty/alacritty.toml
 )
 type brew
 
