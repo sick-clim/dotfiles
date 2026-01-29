@@ -13,8 +13,6 @@ compinit
 HISTSIZE=10000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
-# 他のターミナルとヒストリーを共有
-setopt share_history
 
 eval "$(jump shell --bind=z)"
 
@@ -46,6 +44,7 @@ alias lg='lazygit'
 alias gui='gitui'
 alias lad='lazydocker'
 alias vi='nvim'
+alias d='docker'
 
 function gopen() {
     url=$(git config remote.origin.url)
@@ -66,7 +65,7 @@ function ssh-fzf() {
     zle clear-screen
 }
 zle -N ssh-fzf
-bindkey '^H' ssh-fzf
+bindkey '^U^I' ssh-fzf
 
 function ghq-fzf() {
     local selected_dir=$(ghq list | fzf-tmux -d --reverse --prompt='repo > ')
@@ -76,23 +75,7 @@ function ghq-fzf() {
     fi
 }
 zle -N ghq-fzf
-bindkey '^G^L' ghq-fzf
-
-function launch-vscode() {
-    code .
-    # zle accept-line
-    zle reset-prompt
-}
-zle -N launch-vscode
-bindkey '^O^V' launch-vscode
-
-function launch-nvim() {
-    nvim .
-    # zle accept-line
-    zle reset-prompt
-}
-zle -N launch-nvim
-bindkey '^K^K' launch-nvim
+bindkey '^U^U' ghq-fzf
 
 function git-switch-fzf() {
     local selected_branch=$(git branch --all | fzf-tmux -d --reverse --prompt='git branch > ' | sed -e "s|remotes/origin/||g")
@@ -102,14 +85,65 @@ function git-switch-fzf() {
     fi
 }
 zle -N git-switch-fzf
-bindkey '^G^O' git-switch-fzf
+bindkey '^U^O' git-switch-fzf
+
+function launch-zed() {
+    zed .
+    # zle accept-line
+    zle reset-prompt
+}
+zle -N launch-zed
+bindkey '^O^P' launch-zed
+
+function launch-vscode() {
+    code .
+    # zle accept-line
+    zle reset-prompt
+}
+zle -N launch-vscode
+bindkey '^O^V' launch-vscode
+
+function launch-helix() {
+    hx
+    # zle accept-line
+    zle reset-prompt
+}
+zle -N launch-helix
+# bindkey '^O^O' launch-helix
+
+function launch-nvim() {
+    vi .
+    # zle accept-line
+    zle reset-prompt
+}
+zle -N launch-nvim
+bindkey '^O^O' launch-nvim
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+function switch-remote() {
+    if [ -f ~/.remote_work ]; then
+        echo "turn off remote"
+        rm ~/.remote_work 
+    else
+        echo "turn on remote"
+        touch ~/.remote_work
+    fi
+}
+
 function gi() { curl -sLw n https://www.toptal.com/developers/gitignore/api/$@ ;}
 
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="$HOME/.rd/bin:$PATH"
+export PATH="/Users/yoshioka/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 # export NVM_DIR="$HOME/.nvm"
@@ -117,7 +151,7 @@ export PATH="$HOME/.rd/bin:$PATH"
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
-### . /opt/homebrew/opt/asdf/libexec/asdf.sh
+# . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 alias k=kubectl
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
@@ -125,3 +159,4 @@ alias k=kubectl
 eval "$(/opt/homebrew/bin/mise activate zsh)"
 
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+# eval "$(zellij setup --generate-auto-start zsh)"
