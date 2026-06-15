@@ -32,3 +32,6 @@ export PYENV_ROOT="$HOME/.pyenv"
 # cargo
 . "$HOME/.cargo/env"
 
+export EDITOR=hx
+export SKILL_CHAR_BUDGET=20000
+source ~/.copilot/.env
