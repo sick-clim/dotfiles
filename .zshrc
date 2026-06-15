@@ -7,20 +7,27 @@ plug "zsh-users/zsh-syntax-highlighting"
 
 # Load and initialise completion system
 autoload -Uz compinit
-compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=10000
+HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
+setopt HIST_IGNORE_ALL_DUPS
+setopt SHARE_HISTORY
+setopt HIST_REDUCE_BLANKS
 
-eval "$(jump shell --bind=z)"
+# eval "$(jump shell --bind=z)"
 
 # zsh起動時にtmux 起動
 ### [[ -z $TMUX && ! -z $PS1 ]] && exec tmux
 
 # aliases
-alias ls='eza'
+# alias ls='eza'
 alias ll='eza -ahl --git'
 
 alias g='git'
@@ -34,7 +41,7 @@ alias gs='git status -sb'
 alias gb='git branch'
 alias gbr='git branch -r'
 alias gbc='git rev-parse --abbrev-ref HEAD | pbcopy'
-alias gco='git chckout'
+alias gco='git checkout'
 alias gpp='git pull --prune'
 alias gpr='git pull --rebase'
 alias gpo='git push origin HEAD'
@@ -47,8 +54,9 @@ alias vi='nvim'
 alias d='docker'
 
 function gopen() {
-    url=$(git config remote.origin.url)
+    local url=$(git remote get-url origin 2>/dev/null)
     url=${url%.git}
+    url=${url/git@github.com:/https://github.com/}
     url=$(echo $url | sed 's|//.*@|//|')
     if [[ -n $url ]]; then
         open $url
@@ -57,7 +65,7 @@ function gopen() {
 
 function ssh-fzf() {
     local selected_host
-    selected_host=$(cat ~/.ssh/config | grep -i '^host' | awk '{print $2}' | fzf-tmux -d --reverse --prompt='ssh > ')
+    selected_host=$(grep -i '^host' ~/.ssh/config | awk '{print $2}' | fzf-tmux -d --reverse --prompt='ssh > ')
     if [[ -n ${selected_host} ]]; then
         BUFFER="ssh ${selected_host}"
         zle accept-line
@@ -68,9 +76,15 @@ zle -N ssh-fzf
 bindkey '^U^I' ssh-fzf
 
 function ghq-fzf() {
-    local selected_dir=$(ghq list | fzf-tmux -d --reverse --prompt='repo > ')
-    if [[ -n $selected_dir ]]; then
-        BUFFER="ghq get --look $selected_dir"
+    # 1. 画面には短い名前（github.com/user/repo）を表示して選択
+    local repo=$(ghq list | fzf-tmux -d --reverse --prompt='repo > ')
+
+    if [[ -n $repo ]]; then
+        # 2. 選択した名前から「フルパス」を逆引きする
+        local full_path=$(ghq list --full-path --exact "$repo")
+        
+        # 3. zoxide (z) で移動。これでフルパスが正しく登録される
+        BUFFER="cd $full_path"
         zle accept-line
     fi
 }
@@ -78,7 +92,7 @@ zle -N ghq-fzf
 bindkey '^U^U' ghq-fzf
 
 function git-switch-fzf() {
-    local selected_branch=$(git branch --all | fzf-tmux -d --reverse --prompt='git branch > ' | sed -e "s|remotes/origin/||g")
+    local selected_branch=$(git branch --all | sed 's/^[* ]*//' | fzf-tmux -d --reverse --prompt='git branch > ' | sed -e "s|remotes/origin/||g")
     if [[ -n $selected_branch ]]; then
         BUFFER="git switch $selected_branch"
         zle accept-line
@@ -109,7 +123,7 @@ function launch-helix() {
     zle reset-prompt
 }
 zle -N launch-helix
-# bindkey '^O^O' launch-helix
+bindkey '^O^O' launch-helix
 
 function launch-nvim() {
     vi .
@@ -117,7 +131,7 @@ function launch-nvim() {
     zle reset-prompt
 }
 zle -N launch-nvim
-bindkey '^O^O' launch-nvim
+# bindkey '^O^O' launch-nvim
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -132,7 +146,7 @@ function switch-remote() {
     fi
 }
 
-function gi() { curl -sLw n https://www.toptal.com/developers/gitignore/api/$@ ;}
+function gi() { curl -sLw n https://www.toptal.com/developers/gitignore/api/"$@" ;}
 
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -153,10 +167,50 @@ export PATH="/Users/yoshioka/.rd/bin:$PATH"
 
 # . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
+# ~/scripts ディレクトリ内のすべてのファイルを読み込む
+if [ -d "$HOME/scripts" ]; then
+    for file in "$HOME/scripts/"*.sh; do
+        source "$file"
+    done
+fi
+
 alias k=kubectl
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
 eval "$(/opt/homebrew/bin/mise activate zsh)"
 
+# zoxide
+export _ZO_FZF_OPTS="--no-exact --reverse --height=40% --info=inline --bind=ctrl-z:ignore"
+eval "$(zoxide init zsh)"
+
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
+# copilot CLI 起動用コマンド
+c() {
+  copilot \
+    --allow-tool 'write' \
+    --allow-tool "shell(git:*)" \
+    --deny-tool "shell(git reset:*)" \
+    --deny-tool "shell(git clean:*)" \
+    --allow-tool "shell(curl)" \
+    --allow-tool "shell(cd:*)" \
+    --allow-url "api.github.com" \
+    --allow-url "raw.githubusercontent.com" \
+    --allow-url "github.com" \
+    --allow-tool "shell(find:*)" \
+    --allow-tool "shell(which:*)" \
+    --allow-tool "shell(xargs:*)" \
+    "$@"
+}
 # eval "$(zellij setup --generate-auto-start zsh)"
+
+# copilot-env-load
+# ~/.copilot/.env の環境変数を読み込み
+if [ -f ~/.copilot/.env ]; then
+  set -a
+  source ~/.copilot/.env
+  set +a
+fi
+
+# bun completions
+[ -s "/Users/yoshioka/.bun/_bun" ] && source "/Users/yoshioka/.bun/_bun"
