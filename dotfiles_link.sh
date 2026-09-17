@@ -2,15 +2,15 @@
 set -e
 
 readonly DOTFILES=(
-  .vimrc
-  .zshrc
+  # .vimrc
+  # .zshrc
   .zshenv
   #  .tool-versions
   #  TODO: artro へ移行
   #  .config/nvim/init.vim
   .config/tmux/statusline.conf
   .config/tmux/tmux.conf
-  .config/karabiner/karabiner.json
+  # .config/karabiner/karabiner.json
   #  .config/lvim/config.lua
   .config/helix/config.toml
   .config/alacritty/alacritty.toml
@@ -35,7 +35,7 @@ cd $ghq_root/$repo_path
 
 # Memo: .config 配下をディレクトリ別にシンボリックリンクでも良いかも？
 mkdir -p ~/.config
-for d in nvim tmux karabiner; do
+for d in nvim tmux karabiner helix alacritty; do
   mkdir -p ~/.config/${d}
 done
 

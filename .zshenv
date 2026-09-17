@@ -34,4 +34,6 @@ export PYENV_ROOT="$HOME/.pyenv"
 
 export EDITOR=hx
 export SKILL_CHAR_BUDGET=20000
+set -a
 source ~/.copilot/.env
+set +a
